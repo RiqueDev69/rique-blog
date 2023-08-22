@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onii-Chan</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <img src="assets/imgs/cabecalho.gif" alt="">
+        <h1>Sla</h1>
+        <img src="assets/imgs/cabecalho2.jpg" alt="">
+    </header>
+    <main>
+        <button id="novaPostagemBtn" >Nova Postagem</button>
+        <div id="modal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <h2>Nova Postagem</h2>
+              <input type="text" id="titulo" placeholder="Título">
+              <textarea id="conteudo" placeholder="Conteúdo"></textarea>
+              <button id="publicarBtn">Publicar</button>
+            </div>
+        </div>
+
+        <div id="postagens">
+            <h2>Postagens</h2>
+            <ul id="listaPostagens"></ul>
+        </div>
+          
+    </main>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script>
+  // Configuração do Firebase (substitua pelas suas próprias configurações)
+  const firebaseConfig = {
+    apiKey: "AIzaSyC75NZS4kvY7W-AwcDQ-ubH3_ejxM93j2E",
+    authDomain: "riquezinhochan.firebaseapp.com",
+    databaseURL: "https://riquezinhochan-default-rtdb.firebaseio.com",
+    projectId: "riquezinhochan",
+    storageBucket: "riquezinhochan.appspot.com",
+    messagingSenderId: "725715723286",
+    appId: "1:725715723286:web:2c18862e1bbb8de0d68137",
+    measurementId: "G-ER55HKZ8SB"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  const novaPostagemBtn = document.getElementById("novaPostagemBtn");
+const modal = document.getElementById("modal");
+const modalClose = document.querySelector(".close");
+const publicarBtn = document.getElementById("publicarBtn");
+const tituloInput = document.getElementById("titulo");
+const conteudoInput = document.getElementById("conteudo");
+const listaPostagens = document.getElementById("listaPostagens");
+
+novaPostagemBtn.addEventListener("click", () => {
+  modal.style.display = "block";
+});
+
+modalClose.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+window.addEventListener("click", (event) => {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+});
+
+publicarBtn.addEventListener("click", () => {
+  const titulo = tituloInput.value;
+  const conteudo = conteudoInput.value;
+
+  if (titulo && conteudo) {
+    const dataCriacao = new Date(); // Cria uma nova data com o horário atual
+
+    const postagemData = {
+      titulo: titulo,
+      conteudo: conteudo,
+      dataCriacao: dataCriacao
+    };
+
+    const postagensRef = firebase.firestore().collection("postagens");
+
+    postagensRef.add(postagemData).then((docRef) => {
+      console.log("Postagem adicionada com ID: ", docRef.id);
+      // Adicione cada nova postagem no topo da lista
+      listaPostagens.insertAdjacentHTML("afterbegin", `<li><strong>${titulo}</strong>: ${conteudo}</li>`);
+      modal.style.display = "none";
+      tituloInput.value = "";
+      conteudoInput.value = "";
+    }).catch((error) => {
+      console.error("Erro ao adicionar postagem: ", error);
+    });
+  }
+});
+
+// Função para carregar e exibir todas as postagens em ordem decrescente
+// ...
+
+function carregarPostagens() {
+  const postagensRef = firebase.firestore().collection("postagens");
+
+  postagensRef.orderBy("dataCriacao", "desc").get().then((querySnapshot) => {
+    listaPostagens.innerHTML = ""; // Limpa a lista antes de carregar as postagens
+    querySnapshot.forEach((doc) => {
+      const postagem = doc.data();
+      const postagemHtml = `
+        <li class="postagem-item">
+          <strong>${postagem.titulo}</strong><br><p id= "postagemParagrafo">${postagem.conteudo} </p>
+        </li>
+      `;
+      listaPostagens.insertAdjacentHTML("beforeend", postagemHtml); // Adiciona cada nova postagem no final da lista
+    });
+  }).catch((error) => {
+    console.error("Erro ao carregar postagens: ", error);
+  });
+}
+
+// ...
+
+
+document.addEventListener("DOMContentLoaded", carregarPostagens);
+
+
+</script>
+    <script src="./assets/scripts/scripts.js"></script>
+
+</body>
+</html>

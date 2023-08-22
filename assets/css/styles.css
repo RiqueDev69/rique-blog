@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+header {
+    height: 60px;
+    background-color: #3982E4;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    color: white;
+
+}
+
+header img{
+    height: 50px;
+    border-radius: 50%;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+#novaPostagemBtn {
+    margin: 20px;
+    width: 200px;
+    height: 50px;
+    border: none;
+    background-color: #3982E4;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    position: relative;
+  }
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  input[type="text"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  #publicarBtn {
+    background-color: #1da1f2;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  #publicarBtn:hover {
+    background-color: #0c87b8;
+  }
+  
+  /* Estilos para a lista de postagens */
+  #postagens {
+    margin-top: 20px;
+  }
+  
+  ul#listaPostagens {
+    list-style: none;
+  }
+  
+  ul#listaPostagens li {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  /* Estilo inspirado no Twitter */
+  /* ... */
+  
+
+
+li {
+    width: 400px;
+    border: 1px solid black;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    overflow: hidden; /* Adicione esta linha para esconder o conteúdo que excede as dimensões do li */
+    
+}
+
+.postagem-item {
+    word-wrap: break-word;
+}
+
+.postagem-item strong {
+  width: 300px;
+  word-wrap: break-word;
+}
+
+.postagem-item #postagemParagrafo {
+  width: 380px;
+  word-wrap: break-word;
+}
+
+
+
